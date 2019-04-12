@@ -2,17 +2,13 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
 url = "https://www.apple.com/itunes/charts/songs"
-#open connect
+
 conn = urlopen(url)
-#kéo data về dạng thô
 raw_data = conn.read()
-#decode
 text = raw_data.decode("utf8")
-# chuyen data ve text
 soup = BeautifulSoup(text,"html.parser")
 
 div = soup.find("div",id="main")
-#tim tat ca li trong list
 li_list = div.find_all("li")
 
 item_list = []
