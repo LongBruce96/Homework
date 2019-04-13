@@ -16,8 +16,6 @@ div = soup.find("div",id="main")
 li_list = div.find_all("li")
 
 item_list = []
-song_list = []
-singer_list = []
 
 for li in li_list:
     a = li.h3.a
@@ -31,8 +29,6 @@ for li in li_list:
         "title":title,
         "artis":artis
     }
-    song_list.append(a)
-    singer_list.append(b)
     item_list.append(item)
     print(item_list)
     print("---------------------------")
@@ -40,11 +36,10 @@ for li in li_list:
 import pyexcel
 pyexcel.save_as(records = item_list,dest_file_name="ituntopsong.xlsx")
 
-from youtube_dl import YoutubeDL
-
-options = {
-    'default_search': 'ytsearch', # tell downloader to search instead of directly downloading
-    'max_downloads': 1 # Tell downloader to download only the first entry (video)
-}
-dl = YoutubeDL(options)
-dl.download(str(song_list)+'-'+str(singer_list))
+for s in item_list:
+    options = {
+        'default_search': 'ytsearch', # tell downloader to search instead of directly downloading
+        'max_downloads': 1 # Tell downloader to download only the first entry (video)
+    }
+    dl = YoutubeDL(options)
+    dl.download([s['title']+'-'+s['artis']])
