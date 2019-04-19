@@ -19,24 +19,25 @@ acc=[{
   'password': 'khanh98'
 }]
   
-
 @app.route('/')
 def index():
     return render_template('login.html', acc=acc)
 
 @app.route('/', methods=['POST'])
 def check():
+    new_dict={}
     a = request.form.get('ten')
     b = request.form.get('mat_khau')
-    for dic in acc:
-        if dic['username'] == a and dic['password'] == b:
-            return """
-            <h1> Login Successull!</h1>
-            """
-        else:
-            return """
-            <h1> Login Failed! </h1>
-            """
+    new_dict['username'] = a
+    new_dict['password'] = b
+    if new_dict in acc:
+        return """
+        <h1> Login Successull!</h1>
+        """
+    else:
+        return """
+        <h1> Login Failed! </h1>
+        """
 
 if __name__ == '__main__':
   app.run(host='127.0.0.1', port=8000, debug=True)
